@@ -1,0 +1,53 @@
+#' Dataset containing distance measurements and average quality scores
+#' for sample of 505 pairs of matched Fox and CNN articles evaluated by human
+#' coders on Mechanical Turk. Raw quality scores are regressed on distance measurements
+#' to fit a predictive model for match quality as a function of the 117 metrics considered.
+#'
+#' @details Distance measurements and average quality scores for a sample of 505
+#' matched pairs of documents evaluated by human coders.
+#' @keywords data
+#' @format A \link{data.frame} with 505 pairs and 108 features.
+#' @references Mozer et al. (2019)
+#'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
+"FoxCNNsurvey"
+
+
+
+#' Dataset containing quality scores for 2.8 million
+#' possible matched pairs of Fox and CNN articles corresponding to 117 different combinations
+#' of distance metric and text representation, enumerated in Mozer et al. (2019), Section 3.
+#' Pair quality scores are estimated from a predictive model trained on a sample of 505 pairs
+#' evaluated by human coders.
+#' @details Aggregated quality scores for all 2.8 million possible pairs of Fox and CNN articles
+#' based on the predictive model trained on ratings from human coders.
+#' @keywords data
+#' @format A \link{data.frame} with 2,810,740 pairs and 117 features.
+#' @references Mozer et al. (2019)
+#'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
+"FoxCNNscores"
+
+
+#' Dataset containing metadata for FoxCNN corpus with 1,565 articles from CNN and 1,796 articles from Fox News.
+#'
+#' @details Metadata for the FoxCNN corpus including article names, original URLs, and dates of publication.
+#' @keywords data
+#' @format A \link{data.frame} with 3,361 observations of 5 articles
+#' @references Mozer et al. (2019)
+#'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
+"FoxCNNmeta"
+
+
+#' Corpus with 1,565 articles from CNN and 1,796 articles from Fox News.
+#'
+#' @details Corpus of front-page news articles published online by CNN or Fox News
+#' from 12/20/2014 to 05/09/2015 containing 1,565 articles from CNN and 1,796 articles from Fox News.
+#' Data contains article identifiers corresponding to data in FoxCNNmeta as well as raw and cleaned text data.
+#' @keywords data
+#' @format A \link{data.frame} with 3,361 observations of 5 articles
+#' @references Mozer et al. (2019)
+#'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
+"FoxCNNcorpus"
