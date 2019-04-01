@@ -23,7 +23,7 @@ matched pairs of documents evaluated by human coders.
 }
 \references{
 Mozer et al. (2019)
- \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
- and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
+\\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+ and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
 }
 \keyword{data}

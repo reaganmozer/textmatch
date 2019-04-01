@@ -15,7 +15,8 @@ RoxygenNote: 6.1.1.9000
 Imports: 
     dplyr,
     data.table,
-    quanteda
+    quanteda,
+    stats
 Suggests: 
     knitr,
     rmarkdown

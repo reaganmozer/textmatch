@@ -12,23 +12,6 @@
 #'  and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
 "FoxCNNsurvey"
 
-
-
-#' Dataset containing quality scores for 2.8 million
-#' possible matched pairs of Fox and CNN articles corresponding to 117 different combinations
-#' of distance metric and text representation, enumerated in Mozer et al. (2019), Section 3.
-#' Pair quality scores are estimated from a predictive model trained on a sample of 505 pairs
-#' evaluated by human coders.
-#' @details Aggregated quality scores for all 2.8 million possible pairs of Fox and CNN articles
-#' based on the predictive model trained on ratings from human coders.
-#' @keywords data
-#' @format A \link{data.frame} with 2,810,740 pairs and 117 features.
-#' @references Mozer et al. (2019)
-#'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
-#'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
-"FoxCNNscores"
-
-
 #' Dataset containing metadata for FoxCNN corpus with 1,565 articles from CNN and 1,796 articles from Fox News.
 #'
 #' @details Metadata for the FoxCNN corpus including article names, original URLs, and dates of publication.
@@ -59,8 +42,8 @@
 #'
 #' @details Fitted model for predicting the match quality score for a given
 #' pair of text documents as a function of 117 distance measurements.
-#' @format A \link{glmnet} model object.
+#' @format A \code{\link{glmnet}} model object.
 #' @references Mozer et al. (2019)
 #' \\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
 #'  and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
-"matchQualityModel"
+"quality_model"

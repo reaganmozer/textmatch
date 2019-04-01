@@ -7,16 +7,11 @@
 textmatch(x, outcome = "matrix")
 }
 \arguments{
-\item{x}{A character vector where each element is a document}
+\item{x}{A character vector or subset of the FoxCNN corpus where each element is a document}
 }
 \value{
-An n by n matrix where n is the length of parameter x. Each entry is a standardized similarity score.
+A vector of predicted match quality scores on a scale of 0-10.
 }
 \description{
 This function runs the main ML model as specified in Mozer et al. (2018)
-}
-\examples{
-textmatch(c("I am a dog", "I am a cat", "The rain in Spain falls mainly on the plain."),
- outcome = "matrix")
-
 }

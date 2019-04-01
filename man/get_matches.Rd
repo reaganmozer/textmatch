@@ -22,4 +22,3 @@ A \link{data.frame} of matched pairs of documents
 These functions compute distance matrices from a text representation where each row is a document
 and each column is a feature to measure distance over based on treatment indicator Z
 }
-\keyword{internal}

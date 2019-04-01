@@ -3,7 +3,6 @@
 #' to reduce the dimension of the data, reduce noise, or apply other design rules
 #' (e.g. - to exclude words that occur in too few or too many documents).
 #'
-#' @import stm
 #' @param mod a fitted \code{\link[stm]{stm}} object
 #' @param Z an indicator for treatment assignment
 #' @param out the original call to the STM

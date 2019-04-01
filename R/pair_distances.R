@@ -3,10 +3,8 @@
 #' These functions compute distance matrices from a text representation where each row is a document
 #' and each column is a feature to measure distance over based on treatment indicator Z
 #'
-#' @import quanteda
 #' @import data.table
-#' @import textir
-#' @import Rfast
+#' @import quanteda
 #' @param x a matrix text representation with rows corresponding to each document in a corpus and columns
 #' that represent summary measures of the text (e.g., word counts, topic proportions, etc.). Acceptable forms include
 #' a valid \pkg{quanteda} \code{dfm} object, a \pkg{tm} Document-Term Matrix, or a matrix of estimated topic proportions.
