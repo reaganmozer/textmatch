@@ -8,8 +8,8 @@
 #' @keywords data
 #' @format A \link{data.frame} with 505 pairs and 108 features.
 #' @references Mozer et al. (2019)
-#'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
-#'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
+#' \\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
 "FoxCNNsurvey"
 
 
@@ -51,3 +51,16 @@
 #'  \href{https://reaganmozer.com/textmatching}{Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
 #'  and of Measuring Match Quality}. \emph{Political Analysis}, Forthcoming.
 "FoxCNNcorpus"
+
+
+
+#' Fitted model for pairwise match quality as a function of 117 distance metrics
+#' calculated in Mozer et al. (2019). Trained on "FoxCNNsurvey" dataset.
+#'
+#' @details Fitted model for predicting the match quality score for a given
+#' pair of text documents as a function of 117 distance measurements.
+#' @format A \link{glmnet} model object.
+#' @references Mozer et al. (2019)
+#' \\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
+"matchQualityModel"

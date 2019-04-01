@@ -14,11 +14,12 @@
 #' TRUE or 1 represents a treatment unit, FALSE of 0 represents a control unit.
 #' @param propensity.method Either GLM or MNIR for propensity score estimation
 #' @param docnames A vector of document names equal in length to the number of documents
+#' @param form Should the distances be returned as a list of matrices or condensed into a single data frame?
 #' @return A matrix showing pairwise distances for all potential matches of treatment and control units under various distance metrics
 #' @export
 
 
-pair_distances = function(dat, Z,
+pair_distances = function(dat, Z, form=c("data.frame", "list"),
                               include=c("cosine", "euclidean","mahalanobis","propensity"),
                               propensity.method=c("glm","mnir"),
                               exclude= "jaccard", docnames=NULL,
@@ -42,6 +43,7 @@ pair_distances = function(dat, Z,
 
   ind = which(Z==TRUE)
   ind2 = which(Z==FALSE)
+
   tmp=as.data.frame(matrix(0, nrow=length(ind), ncol=length(ind2)))
   rownames(tmp)=rownames(dat)[ind]
   colnames(tmp)=rownames(dat)[ind2]

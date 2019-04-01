@@ -1,8 +1,7 @@
 #' This function runs the main ML model as specified in Mozer et al. (2018)
 #'
-#' @param x A character vector where each element is a document
-#'
-#' @return An n by n matrix where n is the length of parameter x. Each entry is a standardized similarity score.
+#' @param x A character vector or subset of the FoxCNN corpus where each element is a document
+#' @return A vector of predicted match quality scores on a scale of 0-10.
 #' @export
 #' @examples
 #' textmatch(c("I am a dog", "I am a cat", "The rain in Spain falls mainly on the plain."),
@@ -10,6 +9,9 @@
 #'
 
 textmatch = function(x, outcome = "matrix"){
+
+  load("qualityModel")
+
   scores = get_similarity_scores(x)
   if(outcome == "matrix"){
     preds = predict_simil_matrix(scores)

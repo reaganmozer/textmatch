@@ -1,0 +1,42 @@
+---
+title: "Replication Materials for Mozer et al. (2019)"
+author: "Reagan Mozer, Luke Miratrix, Aaron R. Kaufman, and Jason Anastasopoulos"
+date: "`r Sys.Date()`"
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The sections below describe the R code and data files needed to reproduce the results presented in the Mozer et al. (2019) article entitled *\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents and of Measuring Match Quality*\", forthcoming at *Political Analysis*. 
+
+## Dependencies
+
+For the replication, you will need the following packages:
+
+- tm
+- quanteda 
+- stringr
+- cobalt
+- optmatch
+- dplyr
+
+## R scripts
+
+The files included are...
+
+## Data files
+
+The data files included here are...
+
+## Metadata files
+
+Provide materials needed to reproduce all results presented in the Supplement.
