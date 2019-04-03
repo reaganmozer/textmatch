@@ -8,24 +8,34 @@
 #' @param x a matrix text representation with rows corresponding to each document in a corpus and columns
 #' that represent summary measures of the text (e.g., word counts, topic proportions, etc.). Acceptable forms include
 #' a valid \pkg{quanteda} \code{dfm} object, a \pkg{tm} Document-Term Matrix, or a matrix of estimated topic proportions.
-#' @param Z A logical or binary vector indicating treatment and control for each unit in the study.
-#' TRUE or 1 represents a treatment unit, FALSE of 0 represents a control unit.
-#' @param propensity.method Either GLM or MNIR for propensity score estimation
-#' @param docnames A vector of document names equal in length to the number of documents
+#' @inheritParams calculate_pair_distances
 #' @param form Should the distances be returned as a list of matrices or condensed into a single data frame?
 #' @return A matrix showing pairwise distances for all potential matches of treatment and control units under various distance metrics
 #' @export
 
 
-pair_distances = function(dat, Z, form=c("data.frame", "list"),
-                              include=c("cosine", "euclidean","mahalanobis","propensity"),
-                              propensity.method=c("glm","mnir"),
-                              exclude= "jaccard", docnames=NULL,
-                              verbose=TRUE){
+pair_distances = function(dat, Z, propensity.method=NULL, 
+                          include, exclude,
+                          form="data.frame", verbose=FALSE){
+  
+  if(is.null(form)){form="data.frame"}
+  stopifnot(form%in%c("data.frame","list"))
 
+  dat.orig=dat
+  
   if (!is.dfm(dat)) {
-    dat.orig=dat
     dat=as.dfm(dat)
+  }
+  docnames = 1:nrow(as.matrix(dat))
+  stopifnot(length(Z)==length(docnames))
+  
+  if (is.null(propensity.method)){
+    if (is.dfm(dat.orig)){
+      propensity.method="mnir"
+    }
+    else if (!is.dfm(dat.orig)){
+      propensity.method="glm"
+    }
   }
 
   group.names = c("index.0", "index.1")
@@ -41,24 +51,20 @@ pair_distances = function(dat, Z, form=c("data.frame", "list"),
 
   ind = which(Z==TRUE)
   ind2 = which(Z==FALSE)
-
+  
+  if (form=="data.frame"){
   tmp=as.data.frame(matrix(0, nrow=length(ind), ncol=length(ind2)))
-  rownames(tmp)=rownames(dat)[ind]
-  colnames(tmp)=rownames(dat)[ind2]
+  rownames(tmp)=docnames[ind]
+  colnames(tmp)=docnames[ind2]
   tmp = subset(data.table::melt(as.matrix(tmp)),select=c(Var1,Var2))
   names(tmp)=group.names
   tmp$index.0 = as.numeric(tmp$index.0)
   tmp$index.1 = as.numeric(tmp$index.1)
-
-  #stopifnot(!is.null(x) & !is.null(Z))
-
-  if (!is.null(docnames)){
-    stopifnot(length(docnames)==length(Z))
-    rownames(dat)=docnames
-  } else if (is.null(docnames)){
-    rownames(dat)=1:nrow(dat)
+  } else if (form=="list"){
+  tmp=list()
   }
-
+  #stopifnot(!is.null(x) & !is.null(Z))
+  
   # Calculate each distance
 
   # Similarity metrics
@@ -109,10 +115,16 @@ pair_distances = function(dat, Z, form=c("data.frame", "list"),
       rm(d1)
     }
     name = paste(calc[j], ".dist", sep="")
+    if (form=="data.frame"){
     tmp0 = subset(data.table::melt(dist,value.name=name),select=-c(Var1,Var2))
     tmp = cbind(tmp, tmp0)
-    rm(tmp0, name, dist)
+    rm(tmp0)
+    }
+    else if (form=="list"){
+      tmp = list.append(tmp,list(name=dist))
+    }
+    rm(name, dist)
   }
+  return(tmp)
   rm(dat.orig)
-  tmp
 }

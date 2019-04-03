@@ -16,7 +16,8 @@ Imports:
     dplyr,
     data.table,
     quanteda,
-    stats
+    stats,
+    progress
 Suggests: 
     knitr,
     rmarkdown

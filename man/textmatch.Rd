@@ -4,7 +4,7 @@
 \alias{textmatch}
 \title{This function runs the main ML model as specified in Mozer et al. (2018)}
 \usage{
-textmatch(x, outcome = "matrix")
+textmatch(x, outcome = "matrix", verbose = TRUE)
 }
 \arguments{
 \item{x}{A character vector or subset of the FoxCNN corpus where each element is a document}

@@ -12,13 +12,15 @@
 #' @return A bounded DFM
 #' @export
 
-transform_dfm = function(x, bounds=c(2, nrow(x)-1), tfidf=FALSE, verbose=TRUE){
-  if(verbose==T){print(paste("Removing any features that appear in fewer than ", bounds[1], " documents or more than ", nrow(x)-1, " documents.",sep=""))}
-  freq=suppressWarnings(quanteda::textstat_frequency(x))
-  remove = which(freq$frequency< bounds[1] | freq$frequency>bounds[2])
+transform_dfm = function(x, bounds, tfidf=FALSE, verbose=TRUE){
+  if(verbose==T){print(paste("Removing any features that appear in fewer than ", bounds[1], " documents or more than ", bounds[2], " documents.",sep=""))}
+  freq=quanteda::textstat_frequency(x)
+  remove = unique(c( which(freq$docfreq< bounds[1]), which(freq$docfreq>bounds[2])))
   n.rm = length(remove)
   rm = freq$feature[remove]
-  dat2 = quanteda::as.dfm(dat, remove=rm)
+  if(quanteda::is.dfm(x)==TRUE){dat=x}
+  else{dat=as.dfm(x)}
+  dat2 = quanteda::dfm_remove(dat, rm)
   if (tfidf==TRUE){dat2=quanteda::dfm_tfidf(dat2)}
   if (verbose==TRUE){
     print(paste("Removed ", n.rm, " features. This representation now contains ", ncol(dat2), " features.",sep=""))

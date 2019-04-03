@@ -6,8 +6,7 @@
 to reduce the dimension of the data, reduce noise, or apply other design rules
 (e.g. - to exclude words that occur in too few or too many documents).}
 \usage{
-transform_dfm(x, bounds = c(2, nrow(x) - 1), tfidf = FALSE,
-  verbose = TRUE)
+transform_dfm(x, bounds, tfidf = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{x}{a matrix text representation with rows corresponding to each document in a corpus and columns

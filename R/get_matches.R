@@ -11,7 +11,7 @@
 #' @export
 
 
-get_matches <- function(dist, Z, dist.name, caliper_fun=NULL){
+get_matches <- function(dist, Z, dist.name, caliper_fun=NULL, verbose=FALSE){
 
   tmp0 = data.frame(Z, row.names=1:length(Z))
 
