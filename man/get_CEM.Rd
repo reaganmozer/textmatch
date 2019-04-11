@@ -6,8 +6,7 @@
 coarsened exact matching (CEM) within a specified number of bins
 and return indices for matched sets}
 \usage{
-get_CEM(x, Z, rep.name, cuts = NULL, caliper_fun = NULL,
-  verbose = FALSE, SR = NULL)
+get_CEM(x, Z, rep.name, cuts, caliper_fun, verbose = FALSE, SR = NULL)
 }
 \arguments{
 \item{x}{a text representation}

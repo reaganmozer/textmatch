@@ -17,10 +17,12 @@ transform_stm = function(mod, out, Z, calc.SR=TRUE, coarsen=FALSE){
   out$meta$Z=1
   meta = out$meta
   which.control = which(Z==0)
-
-
+  
+  mod = as.list(mod)
+  
   refit.control = stm::fitNewDocuments(mod, documents=out$documents[which.control], newData=out$meta[which.control,],
-                                       origData=meta, prevalence=~Z, betaIndex=~Z, prevalencePrior="None")
+                                       origData=meta, prevalence=~Z, betaIndex=~Z, prevalencePrior="None",
+                                       verbose=FALSE)
 
 
   # Combine estimated thetas for treated with re-fitted thetas for control

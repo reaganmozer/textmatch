@@ -4,8 +4,9 @@
 \alias{pair_distances}
 \title{Similarity and distance computation between documents or features}
 \usage{
-pair_distances(dat, Z, propensity.method = NULL, include, exclude,
-  form = "data.frame", verbose = FALSE)
+pair_distances(dat, Z, propensity.method, all.counts = NULL,
+  include = c("cosine", "euclidean", "mahalanobis", "propensity"),
+  exclude = "jaccard", form = "data.frame", verbose = FALSE)
 }
 \arguments{
 \item{Z}{A logical or binary vector indicating treatment and control for each unit in the study.

@@ -7,11 +7,10 @@
 #' @param Z a vector of treatment indicators
 #' @param dist.name a string or character with the name of the matching method
 #' @param caliper_fun an optional function specifying the caliper to enforce when matching
-#' @return A \link{data.frame} of matched pairs of documents
 #' @export
 
 
-get_matches <- function(dist, Z, dist.name, caliper_fun=NULL, verbose=FALSE){
+get_matches <- function(dist, Z, dist.name, caliper_fun, verbose=FALSE){
 
   tmp0 = data.frame(Z, row.names=1:length(Z))
 
@@ -22,8 +21,7 @@ get_matches <- function(dist, Z, dist.name, caliper_fun=NULL, verbose=FALSE){
   else{
     dist2 = dist + optmatch::caliper(dist,width=calip.val) + caliper_fun
   }
-  match = optmatch::fullmatch(dist2,data=tmp0,
-                              min.controls=0,max.controls=1)
+  match = optmatch::fullmatch(dist2,data=tmp0)
   m1=makeMatches(match, Z)
   m1$metric=dist.name
   rm(calip.val, tmp0, match,dist2)
@@ -57,7 +55,7 @@ makeMatches <- function(match.obj, Z){
     }
   }
   tmp=as.data.frame(tmp)
-  names(tmp)=c("index.0", "index.1")
+  names(tmp)=c("index.1", "index.0")
   rm(d, d2, index.0, index.1)
   return(tmp)
 }

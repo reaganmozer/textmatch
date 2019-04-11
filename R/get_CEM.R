@@ -12,10 +12,9 @@
 #' @export
 #'
 
-get_CEM <- function(x, Z, rep.name, cuts=NULL, caliper_fun=NULL, verbose=FALSE, SR=NULL){
+get_CEM <- function(x, Z, rep.name, cuts, caliper_fun, verbose=FALSE, SR=NULL){
   
-  if(is.null(cuts)){cuts=2}
-  stopifnot(cuts>=2)
+
   x = as.data.frame(x)
   rownames(x)=1:nrow(x)
   if (SR==TRUE){
@@ -33,14 +32,11 @@ get_CEM <- function(x, Z, rep.name, cuts=NULL, caliper_fun=NULL, verbose=FALSE, 
     SR.val1 = SR.val2 = SR.val3 = 0
   }
   n = ncol(tmp)
-  c1 = 0.1
-  c2 = 0.02
+  c1 = cuts[1]
+  c2 = 0.05
   c3 = 0.01
-  if (n<10){
-  c1=c1/2
-  c2=c2/2
-  c3=c3/2
-  }
+  if(length(cuts)==2){c2 = cuts[2]}
+  if(length(cuts)==3){c3 = cuts[3]}
   tmp1 = tmp
   tmp2 = tmp
   tmp3 = tmp
@@ -49,15 +45,15 @@ get_CEM <- function(x, Z, rep.name, cuts=NULL, caliper_fun=NULL, verbose=FALSE, 
     tmp2[,j]=1*(tmp[,j]>=c2)+1*(tmp[,j]>=c1)
     tmp3[,j]=1*(tmp[,j]>=c1)+1*(tmp[,j]>=c2)+1*(tmp[,j]>=c3)
   }
-  if (cuts==2){
+  if (length(cuts)==1){
     tmp.m = tmp1
     SR.val = SR.val1
   }
-  else if (cuts==3){
+  else if (length(cuts)==2){
     tmp.m=tmp2
     SR.val = SR.val2
   }
-  else if (cuts==4){
+  else if (length(cuts)==3){
     tmp.m=tmp3
     SR.val = SR.val3
   }
@@ -71,7 +67,7 @@ get_CEM <- function(x, Z, rep.name, cuts=NULL, caliper_fun=NULL, verbose=FALSE, 
   if (!is.null(caliper_fun)){
     dist = dist + caliper_fun
   }  
-  match = optmatch::fullmatch(dist, data=tmp.out)
+  match = optmatch::fullmatch(dist, data=tmp.out, tol=0, min.controls=0, max.controls=1)
   m1=makeMatches(match, Z)
   rm(f1,dist,match)
   if (verbose==TRUE){print(paste("Identified ", nrow(m1), " matched pairs of documents.",sep=""))}

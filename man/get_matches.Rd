@@ -4,7 +4,7 @@
 \alias{get_matches}
 \title{Similarity and distance computation between documents or features}
 \usage{
-get_matches(dist, Z, dist.name, caliper_fun = NULL, verbose = FALSE)
+get_matches(dist, Z, dist.name, caliper_fun, verbose = FALSE)
 }
 \arguments{
 \item{Z}{a vector of treatment indicators}
@@ -14,9 +14,6 @@ get_matches(dist, Z, dist.name, caliper_fun = NULL, verbose = FALSE)
 \item{caliper_fun}{an optional function specifying the caliper to enforce when matching}
 
 \item{x}{a matrix of pairwise distances for all potential matches of treatment and control units. See \link{pair_distances}.}
-}
-\value{
-A \link{data.frame} of matched pairs of documents
 }
 \description{
 These functions compute distance matrices from a text representation where each row is a document

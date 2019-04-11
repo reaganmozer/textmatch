@@ -14,20 +14,19 @@
 #' @export
 
 
-pair_distances = function(dat, Z, propensity.method=NULL, 
-                          include, exclude,
+pair_distances = function(dat, Z, propensity.method, all.counts=NULL,
+                          include=c("cosine", "euclidean","mahalanobis","propensity"), 
+                          exclude="jaccard",
                           form="data.frame", verbose=FALSE){
   
   if(is.null(form)){form="data.frame"}
   stopifnot(form%in%c("data.frame","list"))
-
   dat.orig=dat
   
   if (!is.dfm(dat)) {
     dat=as.dfm(dat)
   }
   docnames = 1:nrow(as.matrix(dat))
-  stopifnot(length(Z)==length(docnames))
   
   if (is.null(propensity.method)){
     if (is.dfm(dat.orig)){
@@ -56,7 +55,7 @@ pair_distances = function(dat, Z, propensity.method=NULL,
   tmp=as.data.frame(matrix(0, nrow=length(ind), ncol=length(ind2)))
   rownames(tmp)=docnames[ind]
   colnames(tmp)=docnames[ind2]
-  tmp = subset(data.table::melt(as.matrix(tmp)),select=c(Var1,Var2))
+  tmp = subset(data.table::melt(as.matrix(tmp)),select=c(Var2,Var1))
   names(tmp)=group.names
   tmp$index.0 = as.numeric(tmp$index.0)
   tmp$index.1 = as.numeric(tmp$index.1)
@@ -64,6 +63,8 @@ pair_distances = function(dat, Z, propensity.method=NULL,
   tmp=list()
   }
   #stopifnot(!is.null(x) & !is.null(Z))
+  # Make sure all documents have some features to compare
+
   
   # Calculate each distance
 
@@ -78,7 +79,6 @@ pair_distances = function(dat, Z, propensity.method=NULL,
   # Distance metrics not included in quanteda
   oth = c("mahalanobis","propensity")
   all.methods = c(simil, dists,oth)
-
   calc = all.methods[all.methods%in%include & !all.methods%in%exclude]
   for (j in 1:length(calc)){
     if (verbose==TRUE){
@@ -86,37 +86,36 @@ pair_distances = function(dat, Z, propensity.method=NULL,
     }
 
     if (calc[j]%in%simil){
-      d1 = quanteda::textstat_simil(dat, selection=c(ind2),method = calc[j], margin = "documents")
+      d1 = quanteda::textstat_simil_old(dat, selection=c(ind2),method = calc[j], margin = "documents")
       dist = 1-as.matrix(d1)[c(ind),] #change to distance
       rm(d1)
     } else if (calc[j]=="propensity"){
       if (propensity.method == "mnir"){
-        fitCS = textir::mnlm(NULL, as.matrix(Z,ncol=1), dat)
-        SR = textir::srproj(fitCS, dat)
-        fwd=glm(Z~SR,family="binomial")
-        dat3=data.frame(ps=fwd$fitted.values)
-        dist = as.matrix(Rfast::Dist(dat3))[ind,ind2]
-        rm(SR, fitCS)
+        fitIR = textir::mnlm(cl=NULL, covars=as.matrix(Z,ncol=1), counts=dat)
+        SR = textir::srproj(fitIR, counts=dat)
+        dist = match_on(Z~SR, data=data.frame(Z))
+        rm(SR, fitIR, dat3, fwd, counts.fit)
         }
       else if (propensity.method == "glm"){
         fwd = glm(Z~as.matrix(dat.orig), family="binomial")
         dat3=data.frame(ps=fwd$fitted.values)
         dist = as.matrix(Rfast::Dist(dat3))[ind,ind2]
-      }
         rm(fwd,dat3)
+      }
     } else if (calc[j]=="mahalanobis"){
       dat2 = Rfast::standardise(as.matrix(dat))
       dist = as.matrix(Rfast::Dist(dat2))[ind,ind2]
       rm(dat2)
     }
     else if (calc[j] %in%dists){
-      d1 = quanteda::textstat_dist(dat, selection=c(ind2),method = calc[j], margin = "documents")
+      d1 = quanteda::textstat_dist_old(dat, selection=c(ind2),method = calc[j], margin = "documents")
       dist = as.matrix(d1)[c(ind),]
       rm(d1)
     }
     name = paste(calc[j], ".dist", sep="")
+    dist = abs(dist)
     if (form=="data.frame"){
-    tmp0 = subset(data.table::melt(dist,value.name=name),select=-c(Var1,Var2))
+    tmp0 = subset(data.table::melt(dist,value.name=name),select=-c(Var2,Var1))
     tmp = cbind(tmp, tmp0)
     rm(tmp0)
     }
