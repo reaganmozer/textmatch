@@ -9,54 +9,28 @@
 #' @param caliper_fun an optional function specifying the caliper to enforce when matching
 #' @export
 
-
-get_matches <- function(dist, Z, dist.name, caliper_fun, verbose=FALSE){
-
-  tmp0 = data.frame(Z, row.names=1:length(Z))
-
-  calip.val = stats::quantile(as.vector(dist), c(0.001))
+get_matches <- function(dist, Z, dist.name, caliper_fun){
+  
+  tmp0 = data.frame(Z)
+  
+  calip.val = stats::quantile(as.vector(dist), c(0.001),na.rm=T)
   if(is.null(caliper_fun)){
     dist2 = dist+optmatch::caliper(dist,width=calip.val)
   }
-  else{
+  else if (!is.null(caliper_fun)){
     dist2 = dist + optmatch::caliper(dist,width=calip.val) + caliper_fun
   }
-  match = optmatch::fullmatch(dist2,data=tmp0)
-  m1=makeMatches(match, Z)
-  m1$metric=dist.name
-  rm(calip.val, tmp0, match,dist2)
-
-  return(m1)
-}
-
-#' Create a data frame of matched pairs of documents and return indices for matched sets
-#'
-#' @param match.obj a matched data set
-#' @param Z a vector of treatment indicators
-#' @return A \link{data.frame} of indices for matched pairs of documents
-
-makeMatches <- function(match.obj, Z){
+  match = optmatch::fullmatch(dist2,data=tmp0,remove.unmatchables=T,tol=0)
+  m1 = data.frame(Z, match=match)
+  m1$ID = 1:nrow(m1)
+  m1 = m1[!is.na(m1$match),]
+  m1 = m1[with(m1,order(match, Z)),]
+  m1.t = m1[m1$Z==1,-c(1)]
+  m1.c = m1[m1$Z==0,-c(1)]
+  m2=merge(m1.t, m1.c, by="match", suffixes=c(".1", ".0"), all=T)
+  m3 = subset(m2, select=-c(match))
+  m3$metric=dist.name
+  rm(calip.val, tmp0, match,dist2, m1, m2)
   
-  d = data.frame(cbind(Z, matches=match.obj))
-  rownames(d)=1:nrow(d)
-  d2 = d[!is.na(d$matches),]
-  d2=d2[order(d2$matches),]
-  d2$matches=as.factor(d2$matches)
-  levels(d2$matches)=1:length(unique(d2$matches))
-  
-  tmp=c()
-  for (i in 1:length(unique(d2$matches))){
-    index.0 = rownames(d2)[d2$matches==i & d2$Z==0]
-    index.1 = rownames(d2)[d2$matches==i & d2$Z==1]
-    for (k in 1:length(index.1)){
-      for (j in 1:length(index.0)){
-        tmp = rbind(tmp, c(index.1[k], index.0[j]))
-      }
-    }
-  }
-  tmp=as.data.frame(tmp)
-  names(tmp)=c("index.1", "index.0")
-  rm(d, d2, index.0, index.1)
-  return(tmp)
+  return(m3)
 }
-

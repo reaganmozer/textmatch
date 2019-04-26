@@ -68,10 +68,16 @@ get_CEM <- function(x, Z, rep.name, cuts, caliper_fun, verbose=FALSE, SR=NULL){
     dist = dist + caliper_fun
   }  
   match = optmatch::fullmatch(dist, data=tmp.out, tol=0, min.controls=0, max.controls=1)
-  m1=makeMatches(match, Z)
-  rm(f1,dist,match)
-  if (verbose==TRUE){print(paste("Identified ", nrow(m1), " matched pairs of documents.",sep=""))}
-  m1$metric=paste(rep.name,".cem",sep="")
-  m1
+  m1 = data.frame(Z, match)
+  m1$ID = rownames(m1)
+  m1 = m1[!is.na(m1$match), ]
+  m1 = m1[with(m1, order(match)), ]
+  m1.t = m1[m1$Z==1,-c(1)]
+  m1.c = m1[m1$Z==0,-c(1)]
+  m2 = merge(m1.t, m1.c, by="match", all=T, suffixes=c(".1", ".0"))
+  m2 = m2[with(m2, order(match)), ]
+  m3 = subset(m2, select=-c(match))
+  m3$metric = rep.name
+  m3
 }
 

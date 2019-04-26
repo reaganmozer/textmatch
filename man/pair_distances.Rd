@@ -4,21 +4,18 @@
 \alias{pair_distances}
 \title{Similarity and distance computation between documents or features}
 \usage{
-pair_distances(dat, Z, propensity.method, all.counts = NULL,
-  include = c("cosine", "euclidean", "mahalanobis", "propensity"),
-  exclude = "jaccard", form = "data.frame", verbose = FALSE)
+pair_distances(dat, Z, include = c("cosine", "euclidean", "mahalanobis"),
+  form = "data.frame", verbose = FALSE)
 }
 \arguments{
-\item{Z}{A logical or binary vector indicating treatment and control for each unit in the study.
-TRUE or 1 represents a treatment unit, FALSE of 0 represents a control unit.}
-
-\item{propensity.method}{Either GLM or MNIR for propensity score estimation}
+\item{include}{Which distances to calculate}
 
 \item{form}{Should the distances be returned as a list of matrices or condensed into a single data frame?}
 
 \item{x}{a matrix text representation with rows corresponding to each document in a corpus and columns
 that represent summary measures of the text (e.g., word counts, topic proportions, etc.). Acceptable forms include
-a valid \pkg{quanteda} \code{dfm} object, a \pkg{tm} Document-Term Matrix, or a matrix of estimated topic proportions.}
+a valid \pkg{quanteda} \code{dfm} object, a \pkg{tm} Document-Term Matrix, a matrix of estimated topic proportions, 
+or a vector of estimated propensity scores.}
 }
 \value{
 A matrix showing pairwise distances for all potential matches of treatment and control units under various distance metrics

@@ -4,7 +4,7 @@
 \alias{get_matches}
 \title{Similarity and distance computation between documents or features}
 \usage{
-get_matches(dist, Z, dist.name, caliper_fun, verbose = FALSE)
+get_matches(dist, Z, dist.name, caliper_fun)
 }
 \arguments{
 \item{Z}{a vector of treatment indicators}

@@ -1,7 +1,5 @@
 #' This function calculates the Word2Vec embeddings
 #'
-#' @importFrom softmaxreg wordEmbed
-#' @importFrom gdata keep
 #' @param dat FoxCNN corpus to calculate Word2Vec scores for
 #' @return A list of data frames containing the Word2Vec projections of the corpus
 #' @export

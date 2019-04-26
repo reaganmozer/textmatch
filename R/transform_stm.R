@@ -12,22 +12,21 @@
 #' @export
 
 
-transform_stm = function(mod, out, Z, calc.SR=TRUE, coarsen=FALSE){
+transform_stm = function(mod, out, Z, calc.SR=FALSE, coarsen=FALSE,simplex=FALSE){
 
   out$meta$Z=1
   meta = out$meta
-  which.control = which(Z==0)
-  
+
   mod = as.list(mod)
   
-  refit.control = stm::fitNewDocuments(mod, documents=out$documents[which.control], newData=out$meta[which.control,],
+  refit.control = stm::fitNewDocuments(mod, documents=out$documents, newData=out$meta,
                                        origData=meta, prevalence=~Z, betaIndex=~Z, prevalencePrior="None",
                                        verbose=FALSE)
 
 
   # Combine estimated thetas for treated with re-fitted thetas for control
-  theta2 = Z*mod$theta
-  theta2[which.control,]=refit.control$theta
+  theta2 = mod$theta
+  theta2[Z==0,]=refit.control$theta[Z==0,]
 
 
   # Calculate sufficient reduction
@@ -63,9 +62,10 @@ transform_stm = function(mod, out, Z, calc.SR=TRUE, coarsen=FALSE){
     PS.noInt= (kc%*%dat2)*(1-Z) + (kt%*%dat2)*Z
 
     theta = t(as.matrix(mod$theta))
-    kappa_theta = (kic%*%theta)%*%(1-Z)+(kit%*%theta)%*%Z
-    sums = rowSums(as.vector(kappa_theta)*as.matrix(dat))
-    PS.Int = sums/m
+    kappa_theta_c = t(kic%*%theta)
+    kappa_theta = t(kit%*%theta)
+    kappa_theta[Z==0,]=kappa_theta_c[Z==0,]
+    PS.Int = rowSums(kappa_theta*as.matrix(dat))/m
 
     SR = as.vector(PS.noInt + PS.Int)
     rm(theta, kappa_theta, sums, PS.Int,PS.noInt,dat,dat2,m, kic,kit,kc,kt)
@@ -74,13 +74,12 @@ transform_stm = function(mod, out, Z, calc.SR=TRUE, coarsen=FALSE){
 
   if (coarsen==TRUE){
     focus = sapply(1:nrow(theta2), function(x) sum(sort(theta2[x,],decreasing=T)[1:3])) # how much of the document is explained by the first 3 topics
-    svals = plyr::aaply(theta2, 1, function(vals) {
-      order(vals, decreasing = TRUE)[1:3]
-    } )
+    svals = t(as.matrix(apply(theta2,1,order,decreasing=T)))
+    svals = as.matrix(svals[,1:3])
 
     theta3 = theta2
     for (j in 1:nrow(theta3)){
-      theta3[j,-svals[j,]]=0
+      theta3[j,-c(svals[j,])]=0
     }
     # Renormalize across the topics
     theta3 = theta3/rowSums(theta3)
@@ -88,8 +87,7 @@ transform_stm = function(mod, out, Z, calc.SR=TRUE, coarsen=FALSE){
   if (coarsen==FALSE & calc.SR==TRUE){theta.out=data.frame(cbind(theta2, SR))}
   else if (coarsen==TRUE & calc.SR==FALSE){theta.out =data.frame(theta3, focus)}
   else if (coarsen==TRUE & calc.SR==TRUE){theta.out=data.frame(theta3, focus, SR)}
-  else{
-    theta.out=theta2
-  }
-  theta.out[,-c(1)] # remove first topic proportion due to collinearity
+  else if (coarsen==FALSE & calc.SR==FALSE){theta.out=theta2}
+  if(simplex==TRUE){theta.out=theta.out[,-c(1)]} # remove first topic proportion due to collinearity
+  theta.out
 }
