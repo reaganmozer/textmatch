@@ -6,12 +6,14 @@
 coarsened exact matching (CEM) within a specified number of bins
 and return indices for matched sets}
 \usage{
-get_MNIR(x, Z, weighting = NULL, rep.name = NULL)
+get_MNIR(x, Z, weighting, return.df = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{x}{a TDM or DFM text representation}
 
 \item{Z}{a vector of treatment indicators}
+
+\item{return.df}{Should the distances be returned as a data frame? Default is TRUE.}
 }
 \value{
 A \link{data.frame} MNIR sufficient reduction scores for a corpus
