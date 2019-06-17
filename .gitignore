@@ -6,3 +6,5 @@ inst/doc
 .DS_Store
 R/.DS_Store
 textmatch.Rproj
+R/.DS_Store
+*.Rproj
