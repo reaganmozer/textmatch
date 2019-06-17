@@ -9,10 +9,10 @@
 #' @param caliper_fun an optional function specifying the caliper to enforce when matching
 #' @export
 
-get_matches <- function(dist, Z, dist.name, caliper_fun){
+get_matches <- function(dist, Z, dist.name, caliper_fun, tol=0){
   
   tmp0 = data.frame(Z)
-  
+  rownames(tmp0)=1:nrow(tmp0)
   calip.val = stats::quantile(as.vector(dist), c(0.001),na.rm=T)
   if(is.null(caliper_fun)){
     dist2 = dist+optmatch::caliper(dist,width=calip.val)
@@ -20,7 +20,7 @@ get_matches <- function(dist, Z, dist.name, caliper_fun){
   else if (!is.null(caliper_fun)){
     dist2 = dist + optmatch::caliper(dist,width=calip.val) + caliper_fun
   }
-  match = optmatch::fullmatch(dist2,data=tmp0,tol=0)
+  match = optmatch::fullmatch(dist2,data=tmp0,tol=tol)
   m1 = data.frame(Z, match=match)
   m1$ID = 1:nrow(m1)
   m1 = m1[!is.na(m1$match),]

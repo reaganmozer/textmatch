@@ -10,6 +10,8 @@ above a specified threshold}
 select_matches(corpus, Z, mod, threshold)
 }
 \arguments{
+\item{corpus}{description}
+
 \item{Z}{treatment indicator}
 
 \item{threshold}{for quality scores to return}

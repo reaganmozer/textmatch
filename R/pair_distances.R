@@ -22,8 +22,21 @@ pair_distances = function(dat, Z,
   if(is.null(form)){form="data.frame"}
   stopifnot(form%in%c("data.frame","list"))
   
+  # Similarity metrics
+  simil = c("cosine","jaccard","correlation", "ejaccard", "dice", "edice",
+            "hamman", "simple matching", "faith")
+  # Distance metrics
+  dists = c("euclidean","kullback",
+            "manhattan", "maximum", "canberra","minkowski")
+  # Distance metrics not included in quanteda
+  oth = c("mahalanobis","mahal.lite", "lps")
+  all.methods = c(simil, dists,oth)
+  
+  try(if(sum(!include%in%all.methods)>0) stop("invalid distance metric"))
+  
+  
   if (!is.dfm(dat)) {
-    dat=quanteda::as.dfm(dat)
+    dat=as.dfm(dat)
   }
   
   group.names = c("index.0", "index.1")
@@ -57,18 +70,6 @@ pair_distances = function(dat, Z,
   
   
   # Calculate each distance
-  
-  # Similarity metrics
-  simil = c("cosine","jaccard","correlation", "ejaccard", "dice", "edice",
-            "hamman", "simple matching", "faith")
-  
-  # Distance metrics
-  dists = c("euclidean","kullback",
-            "manhattan", "maximum", "canberra","minkowski")
-  
-  # Distance metrics not included in quanteda
-  oth = c("mahalanobis","mahal.lite", "lps")
-  all.methods = c(simil, dists,oth)
   calc = all.methods[all.methods%in%include]
   for (j in 1:length(calc)){
     if (verbose==TRUE){
@@ -92,7 +93,8 @@ pair_distances = function(dat, Z,
     }
     if (calc[j]=="mahal.lite"){
       dat2 = Rfast::standardise(as.matrix(dat))
-      dist = as.matrix(Rfast::Dist(dat2))[ind,ind2]
+      dist = optmatch::match_on(Z~., data=dat2)
+      #dist = as.matrix(Rfast::Dist(dat2))[ind,ind2]
       rm(dat2)
     }
     else if (calc[j] %in%dists){
@@ -107,7 +109,8 @@ pair_distances = function(dat, Z,
       rm(tmp0)
     }
     else if (form=="list"){
-      tmp = list.append(tmp,list(name=dist))
+      tmp = list(dist)
+      names(tmp)=name
     }
     rm(name, dist)
   }

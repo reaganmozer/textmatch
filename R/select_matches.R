@@ -3,7 +3,7 @@
 #' and return a matched dataset containing all pairs of documents with estimated quality
 #' above a specified threshold
 #'
-#' @param corpus
+#' @param corpus description
 #' @param Z treatment indicator
 #' @param threshold for quality scores to return
 #' @return A \link{data.frame} of matched pairs of documents
