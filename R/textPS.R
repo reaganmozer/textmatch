@@ -46,7 +46,7 @@ textPS_dist <- function(x, Z,  normalize=TRUE,
   
   if (return.df){
   ps = as.data.frame(reshape2::melt(dist@.Data))
-  names(ps)[1:2]=c("index.0", "index.1")
+  names(ps)[1:2]=c("index.1", "index.0")
   }
   if (!return.df){
     ps = dist

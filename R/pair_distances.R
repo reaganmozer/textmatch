@@ -93,8 +93,8 @@ pair_distances = function(dat, Z,
     }
     if (calc[j]=="mahal.lite"){
       dat2 = Rfast::standardise(as.matrix(dat))
-      dist = optmatch::match_on(Z~., data=dat2)
-      #dist = as.matrix(Rfast::Dist(dat2))[ind,ind2]
+      #dist = optmatch::match_on(Z~., data=dat2)
+      dist = as.matrix(Rfast::Dist(dat2))[ind,ind2]
       rm(dat2)
     }
     else if (calc[j] %in%dists){
