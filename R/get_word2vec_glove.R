@@ -6,9 +6,10 @@
 
 get_word2vec_glove <- function(dir.source, corpus){
   ## Read in the Fox/CNN data
-  names.out = c("temp.50", "temp.100", "temp.200", "temp.300")
+  tmp = list.files(paste0(getwd(),dir.source))
+  names.out = gsub(".txt", "", tmp)
   for (j in 1:length(tmp)){
-  glove <- scan(file = paste(dir.source,"/",tmp[j],sep=""), what="", sep="\n")
+  glove <- scan(file = paste0(getwd(),dir.source,tmp[j]), what="", sep="\n")
   glove2 <- proc_pretrained_vec(glove)  # this is the actual function call
   glove2 = t(glove2)
   glove2= data.frame(glove2)

@@ -68,7 +68,7 @@ transform_stm = function(mod, out, Z, calc.SR=FALSE, coarsen=FALSE,simplex=FALSE
     PS.Int = rowSums(kappa_theta*as.matrix(dat))/m
 
     SR = as.vector(PS.noInt + PS.Int)
-    rm(theta, kappa_theta, sums, PS.Int,PS.noInt,dat,dat2,m, kic,kit,kc,kt)
+    rm(theta, kappa_theta, PS.Int,PS.noInt,dat,dat2,m, kic,kit,kc,kt)
   }
 
 
