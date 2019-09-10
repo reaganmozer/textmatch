@@ -33,7 +33,7 @@ get_word2vec_glove <- function(dir.source, corpus){
   ## Read in the Fox/CNN data
   tmp = list.files(paste0(getwd(),dir.source))
   names.out = gsub(".txt", "", tmp)
-  pb = progress::progress_bar$new(format = " generating word vectors [:bar]", total=4)
+  cat("Reading GloVe word vectors...")
   for (j in 1:length(tmp)){
     glove <- scan(file = paste0(getwd(),dir.source,tmp[j]), what="", sep="\n", quiet=T)
     glove2 <- proc_pretrained_vec(glove)  # this is the actual function call
@@ -44,7 +44,7 @@ get_word2vec_glove <- function(dir.source, corpus){
     glove2 = glove2[,c(k, 1:(k-1))]
     temp = softmaxreg::wordEmbed(corpus, dictionary=glove2, meanVec=TRUE)
     assign(names.out[j], temp)
-    pb$tick()  
+    cat(paste0(j, "out of ", length(tmp), " complete."))
     }
   all=mget(names.out)
   return(all)
