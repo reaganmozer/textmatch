@@ -1,7 +1,6 @@
 
 
 #' This function calculates the Word2Vec embeddings
-#'
 #' @param p_vec A character vector or subset of the FoxCNN corpus where each element is a document
 #' @return A vector of predicted match quality scores on a scale of 0-10.
 #' @keywords internal
@@ -12,7 +11,6 @@ proc_pretrained_vec <- function(p_vec) {
   names <- character(length(p_vec))
   # loop through to gather values and names of each word
   for(i in 1:length(p_vec)) {
-    if(i %% 1000 == 0) {print(i)}
     this_vec <- p_vec[i]
     this_vec_unlisted <- unlist(strsplit(this_vec, " "))
     this_vec_values <- as.numeric(this_vec_unlisted[-1])  # this needs testing, does it become numeric?
@@ -27,7 +25,6 @@ proc_pretrained_vec <- function(p_vec) {
 }
 
 #' This function calculates the Word2Vec embeddings
-#'
 #' @param dat FoxCNN corpus to calculate Word2Vec scores for
 #' @return A list of data frames containing the Word2Vec projections of the corpus
 #' @export
@@ -45,6 +42,7 @@ get_word2vec_glove <- function(dir.source, corpus){
     glove2 = glove2[,c(k, 1:(k-1))]
     temp = softmaxreg::wordEmbed(corpus, dictionary=glove2, meanVec=TRUE)
     assign(names.out[j], temp)
+    cat(paste0("Completed ", j, " of ", length(tmp), " models"))
   }
   all=mget(names.out)
   return(all)
