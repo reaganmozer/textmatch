@@ -44,7 +44,7 @@ get_word2vec_glove <- function(dir.source, corpus){
     glove2 = glove2[,c(k, 1:(k-1))]
     temp = softmaxreg::wordEmbed(corpus, dictionary=glove2, meanVec=TRUE)
     assign(names.out[j], temp)
-    cat(paste0(j, "out of ", length(tmp), " complete."))
+    cat(paste0(j, " of ", length(tmp), " complete"),sep="\n")
     }
   all=mget(names.out)
   return(all)
