@@ -82,9 +82,10 @@ pair_distances = function(dat, Z,
       rm(d1)
     }
     if (calc[j]=="lps"){
-      fwd = glm(Z~as.matrix(dat), family="binomial")
-      dist = optmatch::match_on(fwd, data=dat)
-      rm(fwd)
+      dat2 = data.frame(Z,dat)
+      fwd = glm(Z~., family=binomial(),data=dat2)
+      dist = optmatch::match_on(fwd)
+      rm(fwd,dat2)
     }
     if (calc[j]=="mahalanobis"){
       dat2 = data.frame(Z, dat)
