@@ -14,13 +14,13 @@
 
 transform_stm = function(mod, out, Z, calc.SR=FALSE, coarsen=FALSE,simplex=FALSE){
 
-  out$meta$Z=1
+  out$meta$isTreat=1
   meta = out$meta
 
   mod = as.list(mod)
   
   refit.control = stm::fitNewDocuments(mod, documents=out$documents, newData=out$meta,
-                                       origData=meta, prevalence=~Z, betaIndex=~Z, prevalencePrior="None",
+                                       origData=meta, prevalence=~isTreat, betaIndex=~isTreat, prevalencePrior="None",
                                        verbose=FALSE)
 
 
