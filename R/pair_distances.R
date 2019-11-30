@@ -36,7 +36,7 @@ pair_distances = function(dat, Z,
   
   
   if (!is.dfm(dat)) {
-    dat=as.dfm(dat)
+    dat=quanteda::as.dfm(dat)
   }
   
   group.names = c("index.0", "index.1")
@@ -82,7 +82,7 @@ pair_distances = function(dat, Z,
       rm(d1)
     }
     if (calc[j]=="lps"){
-      dat2 = convert(dat, to="matrix")
+      dat2 = quanteda::convert(dat, to="matrix")
       fwd = glm(Z~dat2, family="binomial")
       dist = optmatch::match_on(fwd, data=convert(dat,to="data.frame"), method="euclidean", standardization.scale=NULL)
       rm(fwd,dat2)
@@ -93,7 +93,8 @@ pair_distances = function(dat, Z,
       rm(dat2)
     }
     if (calc[j]=="mahal.lite"){
-      dat2 = Rfast::standardise(as.matrix(dat))
+      dat2 = quanteda::convert(dat,to="matrix")
+      dat2 = Rfast::standardise(dat2)
       #dist = optmatch::match_on(Z~., data=dat2)
       dist = as.matrix(Rfast::Dist(dat2))[ind,ind2]
       rm(dat2)

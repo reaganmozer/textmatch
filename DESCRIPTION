@@ -17,8 +17,20 @@ Imports:
     data.table,
     quanteda,
     stats,
-    progress
+    progress,
+    tm,
+    stm,
+    optmatch,
+    textir,
+    text2vec,
+    cem,
+    Rfast,
+    reshape2,
+    Matrix,
+    cobalt
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    softmaxreg,
+    glmnet
 VignetteBuilder: knitr
