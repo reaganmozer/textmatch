@@ -1,10 +1,9 @@
 #' Utility functions for textmatch objects
-#' @param x a textmatch list of distances
-#' @return a data frame
+#' @param v a vector of covariate or outcome data
+#' @return z a vector of treatment indicators
 #' @export
 #' 
-
-as.tada.list <- function(x){
-  
-  
+SE = function(v,z){
+  out=sqrt(var(v[z==1], na.rm=TRUE)/sum(z==1)+var(v[z==0], na.rm=TRUE)/sum(z==0))
+  return(out)
 }

@@ -58,7 +58,7 @@ pair_distances = function(dat, Z,
     docnames=1:length(Z)
     rownames(tmp)=docnames[ind]
     colnames(tmp)=docnames[ind2]
-    tmp = subset(data.table::melt(as.matrix(tmp)),select=c(Var2,Var1))
+    tmp = subset(reshape2::melt(as.matrix(tmp)),select=c(Var2,Var1))
     names(tmp)=group.names
     tmp$index.0 = as.numeric(tmp$index.0)
     tmp$index.1 = as.numeric(tmp$index.1)
@@ -82,9 +82,10 @@ pair_distances = function(dat, Z,
       rm(d1)
     }
     if (calc[j]=="lps"){
-      fwd = glm(Z~as.matrix(dat), family="binomial")
-      dist = optmatch::match_on(fwd, data=dat)
-      rm(fwd)
+      dat2 = convert(dat, to="matrix")
+      fwd = glm(Z~dat2, family="binomial")
+      dist = optmatch::match_on(fwd, data=convert(dat,to="data.frame"), method="euclidean", standardization.scale=NULL)
+      rm(fwd,dat2)
     }
     if (calc[j]=="mahalanobis"){
       dat2 = data.frame(Z, dat)
@@ -104,7 +105,7 @@ pair_distances = function(dat, Z,
     }
     name = paste(calc[j], ".dist", sep="")
     if (form=="data.frame"){
-      tmp0 = subset(data.table::melt(dist,value.name=name),select=c(name))
+      tmp0 = subset(reshape2::melt(dist,value.name=name),select=c(name))
       tmp = cbind(tmp, abs(tmp0))
       rm(tmp0)
     }
@@ -115,5 +116,4 @@ pair_distances = function(dat, Z,
     rm(name, dist)
   }
   return(tmp)
-  rm(dat.orig)
 }
