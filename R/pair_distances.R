@@ -84,7 +84,9 @@ pair_distances = function(dat, Z,
     if (calc[j]=="lps"){
       dat2 = quanteda::convert(dat, to="matrix")
       fwd = glm(Z~dat2, family="binomial")
-      dist = optmatch::match_on(fwd, data=convert(dat,to="data.frame"), method="euclidean", standardization.scale=NULL)
+      #dat3 = data.frame(Z=Z, ps=fwd$fitted.values)
+      dist = optmatch::match_on(fwd, data=convert(dat,to="data.frame"))
+      #dist = optmatch::match_on(Z~ps, data=dat3)
       rm(fwd,dat2)
     }
     if (calc[j]=="mahalanobis"){

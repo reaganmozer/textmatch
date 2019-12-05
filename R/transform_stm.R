@@ -14,19 +14,22 @@
 
 transform_stm = function(mod, out, Z, calc.SR=FALSE, coarsen=FALSE,simplex=FALSE){
 
-  out$meta$isTreat=1
+  control.ind = which(Z==0)
+  out2 = out
+  out2$meta$isFox=1
+  out2$meta$Z = 1
   meta = out$meta
-
-  mod = as.list(mod)
   
-  refit.control = stm::fitNewDocuments(mod, documents=out$documents, newData=out$meta,
-                                       origData=meta, prevalence=~isTreat, betaIndex=~isTreat, prevalencePrior="None",
+  
+  refit.control = stm::fitNewDocuments(mod, documents=out2$documents[control.ind], newData=out2$meta[control.ind,],
+                                       prevalence=~Z, betaIndex=~Z,
+                                       prevalencePrior="None",
                                        verbose=FALSE)
 
 
   # Combine estimated thetas for treated with re-fitted thetas for control
   theta2 = mod$theta
-  theta2[Z==0,]=refit.control$theta[Z==0,]
+  theta2[Z==0,]=refit.control$theta
 
 
   # Calculate sufficient reduction
@@ -84,7 +87,7 @@ transform_stm = function(mod, out, Z, calc.SR=FALSE, coarsen=FALSE,simplex=FALSE
     # Renormalize across the topics
     theta3 = theta3/rowSums(theta3)
   }
-  if (coarsen==FALSE & calc.SR==TRUE){theta.out=data.frame(cbind(theta2, SR))}
+  if (coarsen==FALSE & calc.SR==TRUE){theta.out=data.frame(theta2, SR)}
   else if (coarsen==TRUE & calc.SR==FALSE){theta.out =data.frame(theta3, focus)}
   else if (coarsen==TRUE & calc.SR==TRUE){theta.out=data.frame(theta3, focus, SR)}
   else if (coarsen==FALSE & calc.SR==FALSE){theta.out=theta2}
