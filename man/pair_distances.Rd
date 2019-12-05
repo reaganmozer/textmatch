@@ -4,8 +4,13 @@
 \alias{pair_distances}
 \title{Similarity and distance computation between documents or features}
 \usage{
-pair_distances(dat, Z, include = c("cosine", "euclidean", "mahalanobis"),
-  form = "data.frame", verbose = FALSE)
+pair_distances(
+  dat,
+  Z,
+  include = c("cosine", "euclidean", "mahalanobis"),
+  form = "data.frame",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{include}{Which distances to calculate}

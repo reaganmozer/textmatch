@@ -6,8 +6,7 @@
 construct a distance matrix for the pairwise distances between
 treatment and control documents based on the textual propensity score.}
 \usage{
-textPS_dist(x, Z, normalize = TRUE, return.df = TRUE,
-  verbose = FALSE)
+textPS_dist(x, Z, normalize = TRUE, return.df = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{x}{a TDM or DFM text representation}

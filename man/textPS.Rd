@@ -17,10 +17,6 @@ textPS(x, Z, verbose = FALSE, g = 1)
 \item{normalize}{should the TDM features be normalized? Defaults to TRUE.}
 
 \item{return.df}{Should the distances be returned as a data frame? Default is TRUE.}
-
-\item{x}{a TDM or DFM text representation}
-
-\item{Z}{a vector of treatment indicators}
 }
 \value{
 A \link{data.frame} MNIR sufficient reduction scores for a corpus

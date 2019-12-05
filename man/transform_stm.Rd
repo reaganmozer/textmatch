@@ -7,8 +7,7 @@ are estimated "as-treated". Also allows for calculation of the SR sufficient red
 to reduce the dimension of the data, reduce noise, or apply other design rules
 (e.g. - to exclude words that occur in too few or too many documents).}
 \usage{
-transform_stm(mod, out, Z, calc.SR = FALSE, coarsen = FALSE,
-  simplex = FALSE)
+transform_stm(mod, out, Z, calc.SR = FALSE, coarsen = FALSE, simplex = FALSE)
 }
 \arguments{
 \item{mod}{a fitted \code{\link[stm]{stm}} object}
