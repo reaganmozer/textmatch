@@ -47,3 +47,16 @@
 #' \\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
 #'  and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
 "quality_model"
+
+
+#' Dataset containing the final STM models chosen for the FoxCNNCorpus data with 
+#' K=10, 30, 50, and 100 topics each.
+#'
+#' @details Output containing the final STM models chosen for the FoxCNNCorpus data with 
+#' K=10, 30, 50, and 100 topics each.
+#' @keywords data
+#' @format Four \code{stmobj} model objects from \code{\link{stm}}.
+#' @references Mozer et al. (2019)
+#' \\"Matching with Text Data: An Experimental Evaluation of Methods for Matching Documents
+#'  and of Measuring Match Quality\\". \emph{Political Analysis}, Forthcoming.
+"FoxCNNtopics"
