@@ -77,7 +77,7 @@ pair_distances = function(dat, Z,
     }
     
     if (calc[j]%in%simil){
-      d1 = quanteda::textstat_simil(dat, y=c(ind2),method = calc[j], margin = "documents")
+      d1 = quanteda::textstat_simil(dat, y=dat[c(ind2),],method = calc[j], margin = "documents")
       dist = 1-as.matrix(d1)[c(ind),] #change to distance
       rm(d1)
     }
@@ -100,7 +100,7 @@ pair_distances = function(dat, Z,
       rm(dat2)
     }
     else if (calc[j] %in%dists){
-      d1 = quanteda::textstat_dist(dat, y=c(ind2),method = calc[j], margin = "documents")
+      d1 = quanteda::textstat_dist(dat, y=dat[c(ind2),],method = calc[j], margin = "documents")
       dist = as.matrix(d1)[c(ind),]
       rm(d1)
     }
