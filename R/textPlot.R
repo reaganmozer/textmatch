@@ -46,7 +46,7 @@ LIWC.plot.rs = function(x,Z, p.adj, alpha, main){
   ord[out1$name%in%c("Analytic","Authentic","Clout","Tone")]=1
   ord[out1$name%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck")]=2
   
-  out1 = out1[with(out1,order(desc(ord),rownames(out1))),]
+  out1 = out1[with(out1,order(dplyr::desc(ord),rownames(out1))),]
   cols= ifelse(out1$est>0,"blue","red")
   xl=min(out1$LL)-1
   xr=max(out1$UL)+1
@@ -93,7 +93,7 @@ LIWC.plot.norm = function(x,Z, alpha, main){
     ord[rownames(out1)%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck")]=2
     
     out1$ord=ord
-    out1 = out1[with(out1,order(desc(ord), desc(rownames(out1)))),]
+    out1 = out1[with(out1,order(dplyr::desc(ord), dplyr::desc(rownames(out1)))),]
     cols= ifelse(out1$est>0,"blue","red")
     xl=min(out1$LL)-1
     xr=max(out1$UL)+1
@@ -144,7 +144,7 @@ LIWC.plot.all = function(x,Z, alpha, main){
   ord[rownames(out1)%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck")]=2
   
   out1$ord=ord
-  out1 = out1[with(out1,order(desc(ord), desc(rownames(out1)))),]
+  out1 = out1[with(out1,order(dplyr::desc(ord), dplyr::desc(rownames(out1)))),]
   cols= ifelse(out1$est>0,"blue","red")
   xl=min(out1$LL)-1
   xr=max(out1$UL)+1
