@@ -27,7 +27,10 @@ Imports:
     Rfast,
     reshape2,
     Matrix,
-    cobalt
+    cobalt,
+    plotrix,
+    scales,
+    SimComp
 Suggests: 
     knitr,
     rmarkdown,

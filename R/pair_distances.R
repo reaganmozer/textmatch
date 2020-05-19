@@ -5,10 +5,11 @@
 #'
 #' @import data.table
 #' @import quanteda
-#' @param x a matrix text representation with rows corresponding to each document in a corpus and columns
+#' @param dat a matrix text representation with rows corresponding to each document in a corpus and columns
 #' that represent summary measures of the text (e.g., word counts, topic proportions, etc.). Acceptable forms include
 #' a valid \pkg{quanteda} \code{dfm} object, a \pkg{tm} Document-Term Matrix, a matrix of estimated topic proportions, 
 #' or a vector of estimated propensity scores.
+#' @param Z a vector of treatment indicators
 #' @param include Which distances to calculate
 #' @param form Should the distances be returned as a list of matrices or condensed into a single data frame?
 #' @return A matrix showing pairwise distances for all potential matches of treatment and control units under various distance metrics

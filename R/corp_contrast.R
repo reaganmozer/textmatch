@@ -1,4 +1,6 @@
 #' Corpus contrasts
+#' 
+#' @importFrom tm DocumentTermMatrix
 #' @param corp a fitted \code{\link[stm]{stm}} object
 #' @param Z an indicator for treatment assignment
 #' @return Corpus contrast summaries

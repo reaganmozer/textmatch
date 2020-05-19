@@ -13,14 +13,16 @@ pair_distances(
 )
 }
 \arguments{
-\item{include}{Which distances to calculate}
-
-\item{form}{Should the distances be returned as a list of matrices or condensed into a single data frame?}
-
-\item{x}{a matrix text representation with rows corresponding to each document in a corpus and columns
+\item{dat}{a matrix text representation with rows corresponding to each document in a corpus and columns
 that represent summary measures of the text (e.g., word counts, topic proportions, etc.). Acceptable forms include
 a valid \pkg{quanteda} \code{dfm} object, a \pkg{tm} Document-Term Matrix, a matrix of estimated topic proportions, 
 or a vector of estimated propensity scores.}
+
+\item{Z}{a vector of treatment indicators}
+
+\item{include}{Which distances to calculate}
+
+\item{form}{Should the distances be returned as a list of matrices or condensed into a single data frame?}
 }
 \value{
 A matrix showing pairwise distances for all potential matches of treatment and control units under various distance metrics
