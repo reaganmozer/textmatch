@@ -50,7 +50,7 @@ LIWC.plot.rs = function(x,Z, p.adj, alpha, main){
   cols= ifelse(out1$est>0,"blue","red")
   xl=min(out1$LL)-1
   xr=max(out1$UL)+1
-  labs=ifelse(p.adj=="none","Difference in medians","Difference in medians\n(Adjusted)")
+  labs=ifelse(p.adj=="none","Difference in medians","Difference in medians\n(Corrected)")
   plotrix::plotCI(x=out1$est, y=1:nrow(out1), ui=out1$UL, li=out1$LL,
          err="x",yaxt="n",ylab="",xlab=labs,
          main=main, pch=NA,scol="white",xlim=c(xl+0.5,xr-0.5))
@@ -98,7 +98,7 @@ LIWC.plot.norm = function(x,Z, alpha, main){
     xl=min(out1$LL)-1
     xr=max(out1$UL)+1
     plotrix::plotCI(x=out1$est, y=1:nrow(out1), ui=out1$UL, li=out1$LL,
-           err="x",yaxt="n",ylab="",xlab="Difference in means\n(Adjusted)",
+           err="x",yaxt="n",ylab="",xlab="Difference in means\n(Corrected)",
            main=main, pch=NA,scol="white",xlim=c(xl+0.5,xr-0.5))
     abline(v=0,lty=2)
     
@@ -125,7 +125,7 @@ LIWC.plot.norm = function(x,Z, alpha, main){
   }
   else if (sum(is.sig)==0){
     plotrix::plotCI(x=1:nrow(out), y=1:nrow(out), ui=out$UL, li=out$LL,
-           err="x",yaxt="n",ylab="",xlab="Difference in means\n(Adjusted)",
+           err="x",yaxt="n",ylab="",xlab="Difference in means\n(Corrected)",
            main=main, pch=NA,scol="white")
     text(x=-1+nrow(out)/2, y=nrow(out)/2, "No significant\ndifferences",col="red",cex=0.75)
   }
@@ -149,7 +149,7 @@ LIWC.plot.all = function(x,Z, alpha, main){
   xl=min(out1$LL)-1
   xr=max(out1$UL)+1
   plotrix::plotCI(x=out1$est, y=1:nrow(out1),ui=out1$UL, li=out1$LL,
-         err="x",yaxt="n",ylab="",xlab="Difference in means\n(Adjusted)",
+         err="x",yaxt="n",ylab="",xlab="Difference in means\n(Corrected)",
          main=main, pch=NA,scol="white",xlim=c(xl+0.5,xr-0.5))
   abline(v=0,lty=2)
   ind=c(min(which(out1$ord==1)),min(which(out1$ord==2)))-0.5
