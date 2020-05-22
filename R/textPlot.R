@@ -189,7 +189,7 @@ norm_stats = function(x,Z,alpha){
   require(SimComp)
   if (!is.factor(Z)){Z=as.factor(Z)}
   dat = cbind(x,Z)
-  s=SimComp::SimCiDiff(dat,"Z",type="Dunnett",covar.equal=T,
+  s=SimComp::SimCiDiff(dat,"Z",covar.equal=T,
               conf.level=1-alpha)
   out = data.frame(est=as.vector(s$estimate), LL.raw=as.vector(s$lower.raw),
                    UL.raw=as.vector(s$upper.raw), LL = as.vector(s$lower), UL=as.vector(s$upper))
