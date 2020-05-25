@@ -90,7 +90,7 @@ LIWC.plot.norm = function(x,Z, alpha, main){
     
     ord = rep(3,nrow(out1))
     ord[rownames(out1)%in%c("Analytic","Authentic","Clout","Tone")]=1
-    ord[rownames(out1)%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck")]=2
+    ord[rownames(out1)%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck","Flesch.Kincaid")]=2
     
     out1$ord=ord
     out1 = out1[with(out1,order(dplyr::desc(ord), dplyr::desc(rownames(out1)))),]
@@ -141,7 +141,7 @@ LIWC.plot.all = function(x,Z, alpha, main){
   
   ord = rep(3,nrow(out1))
   ord[rownames(out1)%in%c("Analytic","Authentic","Clout","Tone")]=1
-  ord[rownames(out1)%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck")]=2
+  ord[rownames(out1)%in%c("WC","WPS","TTR","XXX","Sixltr","spellcheck","Flesch.Kincaid")]=2
   
   out1$ord=ord
   out1 = out1[with(out1,order(dplyr::desc(ord), dplyr::desc(rownames(out1)))),]
