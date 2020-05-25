@@ -167,8 +167,8 @@ LIWC.plot.all = function(x,Z, alpha, main){
   y1 = (1:nrow(out1))[!which.sigs]
   y2 = (1:nrow(out1))[which.sigs]
   axis(side=2,at=y1,labels=rownames(out1)[!which.sigs],las=2,cex.axis=0.7,tcl=-0.25)
-  axis(side=2,at=y2,labels=rownames(out1)[which.sigs],las=2,cex.axis=0.85,tcl=-0.25,
-       col.axis="red")
+  axis(side=2,at=y2,labels=rownames(out1)[which.sigs],las=2,cex.axis=0.75,tcl=-0.25,
+       font=2)
   
 }
 
