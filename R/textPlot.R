@@ -172,10 +172,16 @@ LIWC.plot.all = function(x,Z, alpha, main){
   
 }
 
-
-rs_stats = function(m, Z){
+#' Calculate differences in medians and perform simultaneous rank-sum tests.
+#' 
+#' @param x matrix of LIWC features
+#' @param Z vector of treatment indicators.
+#' @return a \pkg{data.frame} with results.
+#' @export
+#' 
+rs_stats = function(x, Z){
   Z = relevel(Z,"1")
-  w=wilcox.test(m~Z, conf.int=T)
+  w=wilcox.test(x~Z, conf.int=T)
   LL = w$conf.int[1]
   UL = w$conf.int[2]
   est= w$estimate
@@ -185,6 +191,15 @@ rs_stats = function(m, Z){
   out
 }
 
+
+#' Calculate differences in means and calculate simultaneous confidence intervals
+#' with automatic adjustment for multiple comparisons.
+#' 
+#' @param x matrix of LIWC features
+#' @param Z vector of treatment indicators.
+#' @return a \pkg{data.frame} with results.
+#' @export
+#' 
 norm_stats = function(x,Z,alpha){
   require(SimComp)
   if (!is.factor(Z)){Z=as.factor(Z)}
@@ -193,6 +208,8 @@ norm_stats = function(x,Z,alpha){
               conf.level=1-alpha)
   out = data.frame(est=as.vector(s$estimate), LL.raw=as.vector(s$lower.raw),
                    UL.raw=as.vector(s$upper.raw), LL = as.vector(s$lower), UL=as.vector(s$upper))
+  out$var=s$resp
+  out = dplyr::select(out, var, est, everything())
   rownames(out)=s$resp
   out
 }
