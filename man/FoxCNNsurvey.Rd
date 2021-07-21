@@ -7,7 +7,9 @@
 for sample of 505 pairs of matched Fox and CNN articles evaluated by human
 coders on Mechanical Turk. Raw quality scores are regressed on distance measurements
 to fit a predictive model for match quality as a function of the 117 metrics considered.}
-\format{A \link{data.frame} with 505 pairs and 108 features.}
+\format{
+A \link{data.frame} with 505 pairs and 108 features.
+}
 \usage{
 FoxCNNsurvey
 }

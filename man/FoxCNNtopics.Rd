@@ -5,7 +5,9 @@
 \alias{FoxCNNtopics}
 \title{Dataset containing the final STM models chosen for the FoxCNNCorpus data with 
 K=10, 30, 50, and 100 topics each.}
-\format{Four \code{stmobj} model objects from \code{\link{stm}}.}
+\format{
+Four \code{stmobj} model objects from \code{\link{stm}}.
+}
 \usage{
 FoxCNNtopics
 }

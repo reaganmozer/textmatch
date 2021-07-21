@@ -4,7 +4,9 @@
 \name{FoxCNNcorpus}
 \alias{FoxCNNcorpus}
 \title{Corpus with 1,565 articles from CNN and 1,796 articles from Fox News.}
-\format{A \link{data.frame} with 3,361 observations of 5 articles}
+\format{
+A \link{data.frame} with 3,361 observations of 5 articles
+}
 \usage{
 FoxCNNcorpus
 }

@@ -5,7 +5,9 @@
 \alias{quality_model}
 \title{Fitted model for pairwise match quality as a function of 117 distance metrics
 calculated in Mozer et al. (2019). Trained on "FoxCNNsurvey" dataset.}
-\format{A \code{\link{glmnet}} model object.}
+\format{
+A \code{\link{glmnet}} model object.
+}
 \usage{
 quality_model
 }
