@@ -5,9 +5,9 @@
 \title{Calculate a univariate projection and pairwise distances for a corpus of text documents 
 with binary treatment indicator Z.}
 \usage{
-textPS(x, Z, verbose = FALSE, g = 1)
+textPS(x, Z, verbose = FALSE, parallel = T, ...)
 
-textPS(x, Z, verbose = FALSE, g = 1)
+textPS(x, Z, verbose = FALSE, parallel = T, ...)
 }
 \arguments{
 \item{x}{a TDM or DFM text representation}
@@ -27,7 +27,6 @@ A \link{data.frame} MNIR sufficient reduction scores for a corpus
 Calculate a univariate projection and pairwise distances for a corpus of text documents 
 with binary treatment indicator Z.
 
-Given a text representation x and treatment indicator Z,
-estimate a univariate projection of the text data that can serve
-as a sufficient statistic for the confounding information captured within the text.
+Calculate a univariate projection and pairwise distances for a corpus of text documents 
+with binary treatment indicator Z.
 }

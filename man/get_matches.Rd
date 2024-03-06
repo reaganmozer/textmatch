@@ -4,16 +4,18 @@
 \alias{get_matches}
 \title{Similarity and distance computation between documents or features}
 \usage{
-get_matches(dist, Z, dist.name, caliper_fun, tol = 0)
+get_matches(x, Z, dist.name, caliper_fun, text_caliper = 0.001, tol = 0)
 }
 \arguments{
+\item{x}{a matrix of pairwise distances for all potential matches of treatment and control units. See \link{pair_distances}.}
+
 \item{Z}{a vector of treatment indicators}
 
 \item{dist.name}{a string or character with the name of the matching method}
 
 \item{caliper_fun}{an optional function specifying the caliper to enforce when matching}
 
-\item{x}{a matrix of pairwise distances for all potential matches of treatment and control units. See \link{pair_distances}.}
+\item{text_caliper}{should a text-based caliper be enforced? If so, specify the caliper (as a quantile of the distribution of pairwise document distances)}
 }
 \description{
 These functions compute distance matrices from a text representation where each row is a document

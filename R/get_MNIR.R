@@ -9,22 +9,30 @@
 #' @return A \link{data.frame} MNIR sufficient reduction scores for a corpus
 #' @export
 #'
-textPS <- function(x, Z, verbose=FALSE){
+textPS <- function(x, Z, verbose=FALSE,parallel=T,...){
   
   warn.in = options()$warn
   options(warn=-1)
+  
+  cl=NULL
+  if (parallel){
+    cl = parallel::makeCluster(parallel::detectCores()-1)
+  }
   
   if(!is.logical(verbose)) stop("verbose must be a logical.")
   if (nrow(x)!=length(Z)){x=t(as.matrix(x))}
   stopifnot(nrow(x)==length(Z))
   
   covs = as.matrix(data.frame(Z), ncol=1)
-  counts = Matrix::Matrix(as.matrix(x))
-  fitIR = suppressWarnings(textir::mnlm(cl=NULL, covars=covs, counts, verb=verbose, gamma=1))
-  SR = textir::srproj(fitIR, counts)
-  rm(fitIR,covs,counts)
+  x = Matrix::Matrix(as.matrix(x))
+  fit = suppressWarnings(distrom::dmr(cl, covars=covs, counts=x, verb=verbose, ...))
+  SR = textir::srproj(fit, x)
+  rm(fit,covs,counts)
   
-  SR
+  if(parallel){ parallel::stopCluster(cl) }
+  
+  
+  return(SR)
 }
 
 
